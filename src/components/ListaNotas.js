@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import firebaseApp from '../firebase/firebase';
 import { getFirestore, doc, updateDoc } from 'firebase/firestore';
+import Loading from './Loading';
 const firestore = getFirestore(firebaseApp);
 
-const ListaNotas = ({ listaNotas, setListaNotas, emailUsuario }) => {
+const ListaNotas = ({ listaNotas, setListaNotas, emailUsuario, loading }) => {
   const handleEliminar = async (idNota) => {
     //  Crear nueva lista
     const nuevaLista = listaNotas.filter((obj) => obj.id !== idNota);
@@ -18,6 +19,7 @@ const ListaNotas = ({ listaNotas, setListaNotas, emailUsuario }) => {
 
   return (
     <div className="container">
+      {loading && <Loading />}
       <table className="table text-center">
         <tbody>
           {listaNotas.map((nota) => {
@@ -59,7 +61,7 @@ const ListaNotas = ({ listaNotas, setListaNotas, emailUsuario }) => {
                 </td>
                 <th>
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-danger"
                     onClick={() => handleEliminar(nota.id)}
                   >
                     Eliminar Nota

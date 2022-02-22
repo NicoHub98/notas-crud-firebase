@@ -7,10 +7,12 @@ import {
   signInWithRedirect,
   GoogleAuthProvider,
 } from 'firebase/auth';
+import Loading from './Loading';
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [estaRegistrandose, setestaRegistrandose] = useState(false);
   const [mail, setMail] = useState('');
   const [pass, setPass] = useState('');
@@ -19,6 +21,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const email = e.target.exampleInputEmail1.value;
     const password = e.target.exampleInputPassword1.value;
     console.log(email, password);
@@ -39,6 +42,7 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email, password);
       setError('');
     }
+    setLoading(false);
   };
   const cambiaEstado = () => {
     setestaRegistrandose(!estaRegistrandose);
@@ -49,6 +53,7 @@ const Login = () => {
   };
   return (
     <div className="container">
+      {loading && <Loading />}
       <h1>{estaRegistrandose ? 'Regístrate' : 'Inicia Sesión'}</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

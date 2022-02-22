@@ -8,6 +8,7 @@ const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
 const Home = ({ emailUsuario }) => {
+  const [loading, setLoading] = useState(false);
   const [listaNotas, setListaNotas] = useState(null);
   const [btnAgregarNota, setBtnAgregarNota] = useState(false);
 
@@ -15,8 +16,6 @@ const Home = ({ emailUsuario }) => {
     { id: 1, titulo: 'Nota 1', nota: 'Descripción de nota 1' },
     { id: 2, titulo: 'Nota 2', nota: 'Descripción de nota 2' },
     { id: 3, titulo: 'Nota 3', nota: 'Descripción de nota 3' },
-    { id: 4, titulo: 'Nota 4', nota: 'Descripción de nota 4' },
-    { id: 5, titulo: 'Nota 5', nota: 'Descripción de nota 5' },
   ];
   async function buscarCrearDoc(idDocumento) {
     //  Referencia al doc
@@ -40,16 +39,18 @@ const Home = ({ emailUsuario }) => {
   }
 
   useEffect(() => {
+    setLoading(true);
     async function fetchNotas() {
       const notasFetch = await buscarCrearDoc(emailUsuario);
       setListaNotas(notasFetch);
     }
     fetchNotas();
+    setLoading(false);
   }, []);
 
   return (
     <div className="container">
-      Sesión iniciada
+      <h1>Hola {emailUsuario}!</h1>
       <br />
       <button className="btn btn-primary" onClick={() => signOut(auth)}>
         Cerrar Sesión
@@ -61,13 +62,20 @@ const Home = ({ emailUsuario }) => {
       >
         Agregar Nota
       </button>
-      {btnAgregarNota && <AgregarNota />}
+      {btnAgregarNota && (
+        <AgregarNota
+          listaNotas={listaNotas}
+          setListaNotas={setListaNotas}
+          emailUsuario={emailUsuario}
+        />
+      )}
       <hr />
       {listaNotas && (
         <ListaNotas
           listaNotas={listaNotas}
           setListaNotas={setListaNotas}
           emailUsuario={emailUsuario}
+          loading={loading}
         />
       )}
     </div>
