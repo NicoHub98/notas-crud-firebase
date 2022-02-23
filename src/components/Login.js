@@ -22,26 +22,43 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const email = e.target.exampleInputEmail1.value;
-    const password = e.target.exampleInputPassword1.value;
-    console.log(email, password);
 
     if (estaRegistrandose) {
-      const confirmPassword = e.target.confirmExampleInputPassword1.value;
-      if (password === confirmPassword) {
-        const usuario = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        setError('');
+      if (pass === confPass) {
+        await createUserWithEmailAndPassword(auth, mail, pass)
+          .then((u) => {})
+          .catch((err) => {
+            console.log(err.code);
+            console.log(err.message);
+            setError('Datos incorrectos');
+          });
+        // setError('');
       } else {
         setError('Las contraseñas deben coincidir');
       }
     } else {
-      signInWithEmailAndPassword(auth, email, password);
-      setError('');
+      // try {
+      await signInWithEmailAndPassword(auth, mail, pass)
+        .then((userCredential) => {})
+        .catch((err) => {
+          console.log(err.code);
+          console.log(err.message);
+          setError('Datos incorrectos');
+        });
+
+      // setError('');
     }
+    setLoading(false);
+  };
+  const singInWithGoogle = async (auth, googleProvider) => {
+    setLoading(true);
+    await signInWithRedirect(auth, googleProvider)
+      .then((user) => {})
+      .catch((err) => {
+        console.log(err.code);
+        console.log(err.message);
+        setError('Datos incorrectos');
+      });
     setLoading(false);
   };
   const cambiaEstado = () => {
@@ -52,13 +69,19 @@ const Login = () => {
     setConfPass('');
   };
   return (
-    <div className="container">
-      {loading && <Loading />}
-      <h1>{estaRegistrandose ? 'Regístrate' : 'Inicia Sesión'}</h1>
+    <div className="container my-5">
+      <h1 className="text-center">
+        {estaRegistrandose ? 'Registrarse' : 'Iniciar Sesión'}
+      </h1>
+      {loading && (
+        <h2 className="text-center">
+          <Loading />
+        </h2>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
+            Email:
           </label>
           <input
             type="email"
@@ -71,7 +94,7 @@ const Login = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
+            Contraseña:
           </label>
           <input
             type="password"
@@ -81,14 +104,13 @@ const Login = () => {
             value={pass}
           />
         </div>
-        {error !== '' && <div className="text-danger">{error}</div>}
         {estaRegistrandose && (
           <div className="mb-3">
             <label
               htmlFor="confirmExampleInputPassword1"
               className="form-label"
             >
-              Confirm password
+              Confirmar contraseña:
             </label>
             <input
               type="password"
@@ -99,15 +121,17 @@ const Login = () => {
             />
           </div>
         )}
-        <button type="submit" className="btn btn-dark">
-          {estaRegistrandose ? 'Regístrate' : 'Inicia Sesión'}
+        {error !== '' && <div className="text-danger h3">{error}</div>}
+        <button type="submit" className="btn btn-primary">
+          {estaRegistrandose ? 'Regístrate' : 'Iniciar Sesión'}
         </button>
         <button
           type="submit"
           className="btn btn-primary m-2"
-          onClick={() => signInWithRedirect(auth, googleProvider)}
+          onClick={() => singInWithGoogle(auth, googleProvider)}
         >
-          Inicia con Google
+          <i className="bi bi-google"></i>&nbsp;
+          {estaRegistrandose ? 'Regístrate' : 'Inicia sesión'} con Google
         </button>
       </form>
       <button

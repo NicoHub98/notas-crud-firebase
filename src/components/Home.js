@@ -15,7 +15,6 @@ const Home = ({ emailUsuario }) => {
   const fakeData = [
     { id: 1, titulo: 'Nota 1', nota: 'Descripción de nota 1' },
     { id: 2, titulo: 'Nota 2', nota: 'Descripción de nota 2' },
-    { id: 3, titulo: 'Nota 3', nota: 'Descripción de nota 3' },
   ];
   async function buscarCrearDoc(idDocumento) {
     //  Referencia al doc
@@ -39,22 +38,26 @@ const Home = ({ emailUsuario }) => {
   }
 
   useEffect(() => {
-    setLoading(true);
     async function fetchNotas() {
+      setLoading(true);
       const notasFetch = await buscarCrearDoc(emailUsuario);
       setListaNotas(notasFetch);
+      setLoading(false);
     }
     fetchNotas();
-    setLoading(false);
   }, []);
 
   return (
     <div className="container">
-      <h1>Hola {emailUsuario}!</h1>
-      <br />
-      <button className="btn btn-primary" onClick={() => signOut(auth)}>
-        Cerrar Sesión
-      </button>
+      <nav className="navbar navbar-light">
+        <div className="container-fluid">
+          <h1>Hola {emailUsuario}!</h1>
+          <button className="btn btn-primary" onClick={() => signOut(auth)}>
+            Cerrar Sesión
+          </button>
+        </div>
+      </nav>
+
       <hr />
       <button
         className="btn btn-dark mb-3"

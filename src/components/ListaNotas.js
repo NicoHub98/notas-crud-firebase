@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import firebaseApp from '../firebase/firebase';
 import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import Loading from './Loading';
@@ -64,7 +64,7 @@ const ListaNotas = ({ listaNotas, setListaNotas, emailUsuario, loading }) => {
                     className="btn btn-danger"
                     onClick={() => handleEliminar(nota.id)}
                   >
-                    Eliminar Nota
+                    Eliminar
                   </button>
                 </th>
               </tr>
