@@ -50,7 +50,7 @@ const Home = ({ emailUsuario }) => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container dark-theme">
       <nav className="navbar navbar-light">
         <div className="container-fluid">
           <h1>Hola {emailUsuario}!</h1>

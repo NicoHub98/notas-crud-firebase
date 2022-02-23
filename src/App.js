@@ -3,9 +3,9 @@ import Home from './components/Home';
 import Login from './components/Login';
 import firebaseApp from './firebase/firebase';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+// import { getFirestore } from 'firebase/firestore';
 const auth = getAuth(firebaseApp);
-const firebase = getFirestore(firebaseApp);
+// const firebase = getFirestore(firebaseApp);
 
 function App() {
   const [usuarioGlobal, setUsuarioGlobal] = useState(null);

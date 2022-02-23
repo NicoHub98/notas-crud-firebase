@@ -69,7 +69,7 @@ const Login = () => {
     setConfPass('');
   };
   return (
-    <div className="container my-5">
+    <div className="container my-5 dark-theme">
       <h1 className="text-center">
         {estaRegistrandose ? 'Registrarse' : 'Iniciar Sesión'}
       </h1>
@@ -122,12 +122,12 @@ const Login = () => {
           </div>
         )}
         {error !== '' && <div className="text-danger h3">{error}</div>}
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary me-2 mt-2">
           {estaRegistrandose ? 'Regístrate' : 'Iniciar Sesión'}
         </button>
         <button
           type="submit"
-          className="btn btn-primary m-2"
+          className="btn btn-primary mt-2"
           onClick={() => singInWithGoogle(auth, googleProvider)}
         >
           <i className="bi bi-google"></i>&nbsp;
@@ -136,7 +136,7 @@ const Login = () => {
       </form>
       <button
         type="button"
-        className="btn btn-secondary"
+        className="btn btn-secondary mt-2"
         onClick={cambiaEstado}
       >
         {estaRegistrandose
