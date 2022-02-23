@@ -1,10 +1,9 @@
 import React from 'react';
 import firebaseApp from '../firebase/firebase';
 import { getFirestore, doc, updateDoc } from 'firebase/firestore';
-import Loading from './Loading';
 const firestore = getFirestore(firebaseApp);
 
-const ListaNotas = ({ listaNotas, setListaNotas, emailUsuario, loading }) => {
+const ListaNotas = ({ listaNotas, setListaNotas, emailUsuario }) => {
   const handleEliminar = async (idNota) => {
     //  Crear nueva lista
     const nuevaLista = listaNotas.filter((obj) => obj.id !== idNota);
@@ -19,7 +18,6 @@ const ListaNotas = ({ listaNotas, setListaNotas, emailUsuario, loading }) => {
 
   return (
     <div className="container">
-      {loading && <Loading />}
       <table className="table text-center">
         <tbody>
           {listaNotas.map((nota) => {
