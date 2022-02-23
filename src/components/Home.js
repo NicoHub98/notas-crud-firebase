@@ -11,10 +11,11 @@ const Home = ({ emailUsuario }) => {
   const [loading, setLoading] = useState(false);
   const [listaNotas, setListaNotas] = useState(null);
   const [btnAgregarNota, setBtnAgregarNota] = useState(false);
+  const [hayNotas, setHayNotas] = useState(null);
 
   const fakeData = [
-    { id: 1, titulo: 'Nota 1', nota: 'Descripción de nota 1' },
-    { id: 2, titulo: 'Nota 2', nota: 'Descripción de nota 2' },
+    { id: 1, titulo: 'Agregar título 1', nota: 'Agregar descripción 1' },
+    { id: 2, titulo: 'Agregar título 2', nota: 'Agregar descripción 2' },
   ];
   async function buscarCrearDoc(idDocumento) {
     //  Referencia al doc
@@ -42,6 +43,7 @@ const Home = ({ emailUsuario }) => {
       setLoading(true);
       const notasFetch = await buscarCrearDoc(emailUsuario);
       setListaNotas(notasFetch);
+      setHayNotas(notasFetch.length);
       setLoading(false);
     }
     fetchNotas();
@@ -70,6 +72,7 @@ const Home = ({ emailUsuario }) => {
           listaNotas={listaNotas}
           setListaNotas={setListaNotas}
           emailUsuario={emailUsuario}
+          setHayNotas={setHayNotas}
         />
       )}
       <hr />
@@ -79,6 +82,8 @@ const Home = ({ emailUsuario }) => {
           setListaNotas={setListaNotas}
           emailUsuario={emailUsuario}
           loading={loading}
+          hayNotas={hayNotas}
+          setHayNotas={setHayNotas}
         />
       )}
     </div>

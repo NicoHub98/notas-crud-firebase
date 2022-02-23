@@ -3,7 +3,13 @@ import firebaseApp from '../firebase/firebase';
 import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 const firestore = getFirestore(firebaseApp);
 
-const ListaNotas = ({ listaNotas, setListaNotas, emailUsuario }) => {
+const ListaNotas = ({
+  listaNotas,
+  setListaNotas,
+  emailUsuario,
+  hayNotas,
+  setHayNotas,
+}) => {
   const handleEliminar = async (idNota) => {
     //  Crear nueva lista
     const nuevaLista = listaNotas.filter((obj) => obj.id !== idNota);
@@ -14,10 +20,12 @@ const ListaNotas = ({ listaNotas, setListaNotas, emailUsuario }) => {
 
     //  Actualizar state
     setListaNotas(nuevaLista);
+    setHayNotas(nuevaLista.length);
   };
 
   return (
     <div className="container">
+      {!hayNotas && <h2>No hay notas..</h2>}
       <table className="table text-center">
         <tbody>
           {listaNotas.map((nota) => {

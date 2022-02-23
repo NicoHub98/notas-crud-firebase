@@ -3,7 +3,12 @@ import firebaseApp from '../firebase/firebase';
 import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 const firestore = getFirestore(firebaseApp);
 
-const AgregarNota = ({ listaNotas, setListaNotas, emailUsuario }) => {
+const AgregarNota = ({
+  listaNotas,
+  setListaNotas,
+  emailUsuario,
+  setHayNotas,
+}) => {
   const [titulo, setTitulo] = useState('');
   const [nota, setNota] = useState('');
 
@@ -23,6 +28,7 @@ const AgregarNota = ({ listaNotas, setListaNotas, emailUsuario }) => {
     setListaNotas(nuevaLista);
     setTitulo('');
     setNota('');
+    setHayNotas(nuevaLista.length);
   };
 
   return (
