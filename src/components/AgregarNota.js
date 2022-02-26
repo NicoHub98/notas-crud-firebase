@@ -8,27 +8,37 @@ const AgregarNota = ({
   setListaNotas,
   emailUsuario,
   setHayNotas,
+  titulo,
+  setTitulo,
+  nota,
+  setNota,
 }) => {
-  const [titulo, setTitulo] = useState('');
-  const [nota, setNota] = useState('');
+  const [error, setError] = useState(false);
 
   const handleAgregar = async (e) => {
     e.preventDefault();
-    //  Crear nueva lista
-    const nuevaLista = [
-      ...listaNotas,
-      { id: +new Date(), titulo: titulo, nota: nota },
-    ];
 
-    //  Actualizar bd
-    const docRef = doc(firestore, `usuarios/${emailUsuario}`);
-    updateDoc(docRef, { nota: [...nuevaLista] });
+    //  Agregar
+    if (titulo !== '' && nota !== '') {
+      //  Crear nueva lista
+      const nuevaLista = [
+        ...listaNotas,
+        { id: +new Date(), titulo: titulo, nota: nota },
+      ];
 
-    //  Actualizar estado
-    setListaNotas(nuevaLista);
-    setTitulo('');
-    setNota('');
-    setHayNotas(nuevaLista.length);
+      //  Actualizar bd
+      const docRef = doc(firestore, `usuarios/${emailUsuario}`);
+      updateDoc(docRef, { nota: [...nuevaLista] });
+
+      //  Actualizar estado
+      setListaNotas(nuevaLista);
+      setTitulo('');
+      setNota('');
+      setHayNotas(nuevaLista.length);
+      setError(false);
+    } else {
+      setError(true);
+    }
   };
 
   return (
@@ -59,8 +69,13 @@ const AgregarNota = ({
             onChange={(e) => setNota(e.target.value)}
           />
         </div>
-        <button className="btn btn-primary">Agregar nota</button>
+        <button className="btn btn-primary">Guardar</button>
       </form>
+      {error && (
+        <div class="alert alert-danger mt-2" role="alert">
+          Debes agregar título y nota.
+        </div>
+      )}
     </div>
   );
 };

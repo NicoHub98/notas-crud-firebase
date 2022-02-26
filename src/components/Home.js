@@ -1,9 +1,11 @@
+import '../styles/Styles.css';
 import React, { useEffect, useState } from 'react';
 import AgregarNota from './AgregarNota';
 import ListaNotas from './ListaNotas';
 import firebaseApp from '../firebase/firebase';
 import { getAuth, signOut } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import Loading from './Loading';
 const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
@@ -12,10 +14,12 @@ const Home = ({ emailUsuario }) => {
   const [listaNotas, setListaNotas] = useState(null);
   const [btnAgregarNota, setBtnAgregarNota] = useState(false);
   const [hayNotas, setHayNotas] = useState(null);
+  const [titulo, setTitulo] = useState('');
+  const [nota, setNota] = useState('');
 
   const fakeData = [
-    { id: 1, titulo: 'Agregar título 1', nota: 'Agregar descripción 1' },
-    { id: 2, titulo: 'Agregar título 2', nota: 'Agregar descripción 2' },
+    { id: 1, titulo: 'Título..', nota: 'Descripción..' },
+    { id: 2, titulo: 'Título..', nota: 'Descripción..' },
   ];
   async function buscarCrearDoc(idDocumento) {
     //  Referencia al doc
@@ -50,10 +54,12 @@ const Home = ({ emailUsuario }) => {
   }, []);
 
   return (
-    <div className="container dark-theme">
+    <div className="container b-background">
       <nav className="navbar navbar-light">
         <div className="container-fluid">
-          <h1>Hola {emailUsuario}!</h1>
+          <h1>
+            Hola {emailUsuario.substring(0, emailUsuario.lastIndexOf('@'))}!
+          </h1>
           <button className="btn btn-primary" onClick={() => signOut(auth)}>
             Cerrar Sesión
           </button>
@@ -73,17 +79,22 @@ const Home = ({ emailUsuario }) => {
           setListaNotas={setListaNotas}
           emailUsuario={emailUsuario}
           setHayNotas={setHayNotas}
+          titulo={titulo}
+          setTitulo={setTitulo}
+          nota={nota}
+          setNota={setNota}
         />
       )}
       <hr />
+      {loading && <Loading />}
       {listaNotas && (
         <ListaNotas
           listaNotas={listaNotas}
           setListaNotas={setListaNotas}
           emailUsuario={emailUsuario}
-          loading={loading}
           hayNotas={hayNotas}
           setHayNotas={setHayNotas}
+          loading={loading}
         />
       )}
     </div>

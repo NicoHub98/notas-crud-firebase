@@ -1,6 +1,7 @@
 import React from 'react';
 import firebaseApp from '../firebase/firebase';
 import { getFirestore, doc, updateDoc } from 'firebase/firestore';
+import Loading from './Loading';
 const firestore = getFirestore(firebaseApp);
 
 const ListaNotas = ({
@@ -9,6 +10,7 @@ const ListaNotas = ({
   emailUsuario,
   hayNotas,
   setHayNotas,
+  loading,
 }) => {
   const handleEliminar = async (idNota) => {
     //  Crear nueva lista
@@ -22,6 +24,14 @@ const ListaNotas = ({
     setListaNotas(nuevaLista);
     setHayNotas(nuevaLista.length);
   };
+
+  if (loading) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
 
   return (
     <div className="container">

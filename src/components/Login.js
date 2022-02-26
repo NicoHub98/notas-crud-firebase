@@ -1,3 +1,4 @@
+import '../styles/Styles.css';
 import React, { useState } from 'react';
 import firebaseApp from '../firebase/firebase';
 import {
@@ -17,7 +18,7 @@ const Login = () => {
   const [mail, setMail] = useState('');
   const [pass, setPass] = useState('');
   const [confPass, setConfPass] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,11 +31,11 @@ const Login = () => {
           .catch((err) => {
             console.log(err.code);
             console.log(err.message);
-            setError('Datos incorrectos');
+            setError(true);
           });
         // setError('');
       } else {
-        setError('Las contraseñas deben coincidir');
+        setError(true);
       }
     } else {
       // try {
@@ -43,7 +44,7 @@ const Login = () => {
         .catch((err) => {
           console.log(err.code);
           console.log(err.message);
-          setError('Datos incorrectos');
+          setError(true);
         });
 
       // setError('');
@@ -57,20 +58,20 @@ const Login = () => {
       .catch((err) => {
         console.log(err.code);
         console.log(err.message);
-        setError('Datos incorrectos');
+        setError(true);
       });
     setLoading(false);
   };
   const cambiaEstado = () => {
     setestaRegistrandose(!estaRegistrandose);
-    setError('');
+    setError(false);
     setMail('');
     setPass('');
     setConfPass('');
   };
   return (
-    <div className="container my-5 dark-theme">
-      <h1 className="text-center">
+    <div className="container b-background">
+      <h1 className="text-center mb-3">
         {estaRegistrandose ? 'Registrarse' : 'Iniciar Sesión'}
       </h1>
       {loading && (
@@ -88,6 +89,7 @@ const Login = () => {
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
+            autoFocus
             onChange={(e) => setMail(e.target.value)}
             value={mail}
           />
@@ -121,7 +123,11 @@ const Login = () => {
             />
           </div>
         )}
-        {error !== '' && <div className="text-danger h3">{error}</div>}
+        {error && (
+          <div class="alert alert-danger mt-2" role="alert">
+            Correo o contraseña incorrectas.
+          </div>
+        )}
         <button type="submit" className="btn btn-primary me-2 mt-2">
           {estaRegistrandose ? 'Regístrate' : 'Iniciar Sesión'}
         </button>
@@ -131,7 +137,7 @@ const Login = () => {
           onClick={() => singInWithGoogle(auth, googleProvider)}
         >
           <i className="bi bi-google"></i>&nbsp;
-          {estaRegistrandose ? 'Regístrate' : 'Inicia sesión'} con Google
+          {estaRegistrandose ? 'Regístrate' : 'Iniciar sesión'} con Google
         </button>
       </form>
       <button
