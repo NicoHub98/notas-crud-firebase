@@ -1,23 +1,23 @@
-import '../styles/Styles.css';
-import React, { useState } from 'react';
-import firebaseApp from '../firebase/firebase';
+import "../styles/Styles.css";
+import React, { useState } from "react";
+import firebaseApp from "../firebase/firebase";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithRedirect,
   GoogleAuthProvider,
-} from 'firebase/auth';
-import Loading from './Loading';
+} from "firebase/auth";
+import Loading from "./Loading";
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [estaRegistrandose, setestaRegistrandose] = useState(false);
-  const [mail, setMail] = useState('');
-  const [pass, setPass] = useState('');
-  const [confPass, setConfPass] = useState('');
+  const [mail, setMail] = useState("");
+  const [pass, setPass] = useState("");
+  const [confPass, setConfPass] = useState("");
   const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -65,14 +65,14 @@ const Login = () => {
   const cambiaEstado = () => {
     setestaRegistrandose(!estaRegistrandose);
     setError(false);
-    setMail('');
-    setPass('');
-    setConfPass('');
+    setMail("");
+    setPass("");
+    setConfPass("");
   };
   return (
     <div className="container b-background">
       <h1 className="text-center mb-3">
-        {estaRegistrandose ? 'Registrarse' : 'Iniciar Sesión'}
+        {estaRegistrandose ? "Registrarse" : "Iniciar Sesión"}
       </h1>
       {loading && (
         <h2 className="text-center">
@@ -92,6 +92,7 @@ const Login = () => {
             autoFocus
             onChange={(e) => setMail(e.target.value)}
             value={mail}
+            placeholder={!estaRegistrandose && "test@mail.com"}
           />
         </div>
         <div className="mb-3">
@@ -104,24 +105,28 @@ const Login = () => {
             id="exampleInputPassword1"
             onChange={(e) => setPass(e.target.value)}
             value={pass}
+            placeholder={!estaRegistrandose && "test12"}
           />
         </div>
         {estaRegistrandose && (
-          <div className="mb-3">
-            <label
-              htmlFor="confirmExampleInputPassword1"
-              className="form-label"
-            >
-              Confirmar contraseña:
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="confirmExampleInputPassword1"
-              onChange={(e) => setConfPass(e.target.value)}
-              value={confPass}
-            />
-          </div>
+          <>
+            <div className="mb-3">
+              <label
+                htmlFor="confirmExampleInputPassword1"
+                className="form-label"
+              >
+                Confirmar contraseña:
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="confirmExampleInputPassword1"
+                onChange={(e) => setConfPass(e.target.value)}
+                value={confPass}
+              />
+            </div>
+            <p>- La contraseña debe contener 6 o más caracteres.</p>
+          </>
         )}
         {error && (
           <div class="alert alert-danger mt-2" role="alert">
@@ -129,7 +134,7 @@ const Login = () => {
           </div>
         )}
         <button type="submit" className="btn btn-primary me-2 mt-2">
-          {estaRegistrandose ? 'Regístrate' : 'Iniciar Sesión'}
+          {estaRegistrandose ? "Regístrate" : "Iniciar Sesión"}
         </button>
         <button
           type="submit"
@@ -137,7 +142,7 @@ const Login = () => {
           onClick={() => singInWithGoogle(auth, googleProvider)}
         >
           <i className="bi bi-google"></i>&nbsp;
-          {estaRegistrandose ? 'Regístrate' : 'Iniciar sesión'} con Google
+          {estaRegistrandose ? "Regístrate" : "Iniciar sesión"} con Google
         </button>
       </form>
       <button
@@ -146,8 +151,8 @@ const Login = () => {
         onClick={cambiaEstado}
       >
         {estaRegistrandose
-          ? '¿Ya tienes cuenta? Inicia sesión'
-          : '¿No tienes cuenta? Regístrate'}
+          ? "¿Ya tienes cuenta? Inicia sesión"
+          : "¿No tienes cuenta? Regístrate"}
       </button>
     </div>
   );

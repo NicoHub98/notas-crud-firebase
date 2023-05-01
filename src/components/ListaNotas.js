@@ -1,7 +1,7 @@
-import React from 'react';
-import firebaseApp from '../firebase/firebase';
-import { getFirestore, doc, updateDoc } from 'firebase/firestore';
-import Loading from './Loading';
+import React from "react";
+import firebaseApp from "../firebase/firebase";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import Loading from "./Loading";
 const firestore = getFirestore(firebaseApp);
 
 const ListaNotas = ({

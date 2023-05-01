@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import firebaseApp from '../firebase/firebase';
-import { getFirestore, doc, updateDoc } from 'firebase/firestore';
+import React, { useState } from "react";
+import firebaseApp from "../firebase/firebase";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
 const firestore = getFirestore(firebaseApp);
 
 const AgregarNota = ({
@@ -19,7 +19,7 @@ const AgregarNota = ({
     e.preventDefault();
 
     //  Agregar
-    if (titulo !== '' && nota !== '') {
+    if (titulo !== "" && nota !== "") {
       //  Crear nueva lista
       const nuevaLista = [
         ...listaNotas,
@@ -32,8 +32,8 @@ const AgregarNota = ({
 
       //  Actualizar estado
       setListaNotas(nuevaLista);
-      setTitulo('');
-      setNota('');
+      setTitulo("");
+      setNota("");
       setHayNotas(nuevaLista.length);
       setError(false);
     } else {
@@ -42,7 +42,7 @@ const AgregarNota = ({
   };
 
   return (
-    <div className="container animate__animated animate__fadeIn">
+    <div className="container animate__animated animate__fadeIn agregarNota">
       <form onSubmit={handleAgregar}>
         <div className="mb-3">
           <label htmlFor="titulo" className="form-label">

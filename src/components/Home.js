@@ -1,11 +1,11 @@
-import '../styles/Styles.css';
-import React, { useEffect, useState } from 'react';
-import AgregarNota from './AgregarNota';
-import ListaNotas from './ListaNotas';
-import firebaseApp from '../firebase/firebase';
-import { getAuth, signOut } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
-import Loading from './Loading';
+import "../styles/Styles.css";
+import React, { useEffect, useState } from "react";
+import AgregarNota from "./AgregarNota";
+import ListaNotas from "./ListaNotas";
+import firebaseApp from "../firebase/firebase";
+import { getAuth, signOut } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import Loading from "./Loading";
 const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
@@ -14,12 +14,12 @@ const Home = ({ emailUsuario }) => {
   const [listaNotas, setListaNotas] = useState(null);
   const [btnAgregarNota, setBtnAgregarNota] = useState(false);
   const [hayNotas, setHayNotas] = useState(null);
-  const [titulo, setTitulo] = useState('');
-  const [nota, setNota] = useState('');
+  const [titulo, setTitulo] = useState("");
+  const [nota, setNota] = useState("");
 
   const fakeData = [
-    { id: 1, titulo: 'Título..', nota: 'Descripción..' },
-    { id: 2, titulo: 'Título..', nota: 'Descripción..' },
+    { id: 1, titulo: "Título..", nota: "Descripción.." },
+    { id: 2, titulo: "Título..", nota: "Descripción.." },
   ];
   async function buscarCrearDoc(idDocumento) {
     //  Referencia al doc
@@ -58,7 +58,7 @@ const Home = ({ emailUsuario }) => {
       <nav className="navbar navbar-light">
         <div className="container-fluid">
           <h1>
-            Hola {emailUsuario.substring(0, emailUsuario.lastIndexOf('@'))}!
+            Hola {emailUsuario.substring(0, emailUsuario.lastIndexOf("@"))}!
           </h1>
           <button className="btn btn-primary" onClick={() => signOut(auth)}>
             Cerrar Sesión
@@ -71,7 +71,7 @@ const Home = ({ emailUsuario }) => {
         className="btn btn-dark mb-3"
         onClick={() => setBtnAgregarNota(!btnAgregarNota)}
       >
-        Agregar Nota
+        {btnAgregarNota ? "Cerrar" : "Agregar Nota"}
       </button>
       {btnAgregarNota && (
         <AgregarNota
@@ -85,7 +85,7 @@ const Home = ({ emailUsuario }) => {
           setNota={setNota}
         />
       )}
-      <hr />
+      {/* <hr /> */}
       {loading && <Loading />}
       {listaNotas && (
         <ListaNotas
